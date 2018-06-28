@@ -1,0 +1,82 @@
+<form class="example-form" [formGroup]="form">
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Company (disabled)" disabled value="Google">
+    </mat-form-field>
+
+
+    <table formArrayName="invoiceItems" cellspacing="10">
+        <tr *ngFor="let item of addItemArr.controls; let i=index;" [formGroupName]="i">
+            <td>
+                <button mat-button color="warn" (click)="removeItem(item)" matTooltip="click for delete"><i class="material-icons">delete_forever</i></button>
+            </td>
+
+            <!-- <td>
+                <mat-form-field class="example-full-width">
+                    <input matInput size="10" formControlName="id" placeholder="id" autofocus="autofocus" [value]="i" type="number" />
+                  </mat-form-field>
+                </td> -->
+            <td>
+                <mat-form-field class="example-small-width">
+                    <input matInput size="10" (keyup)="calculate()" formControlName="cantidad" placeholder="Ammount" autofocus="autofocus" required type="number" required/>
+                </mat-form-field>
+            </td>
+            <td>
+
+                <mat-form-field class="example-full-width">
+                    <input type="text" class="font-size" placeholder="Assignee" (focus)="filterOpt()" size="60px" aria-label="Assignee" matInput formControlName="itemProducto" [matAutocomplete]="auto" required>
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{ option.nombre }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </td>
+
+            <td>
+                <mat-form-field class="example-full-width">
+                    <input matInput size="10" (keyup)="calculate()" formControlName="precio" placeholder="Unit Price" autofocus="autofocus" required/>
+                </mat-form-field>
+            </td>
+
+            <td>
+                <!-- <mat-form-field class="example-full-width"> -->
+                <input class="form-control right_placeholder" size="10" formControlName="total" disabled placeholder="Total (disabled)">
+                <!-- </mat-form-field> -->
+            </td>
+            <td>
+                <button mat-button (click)='addItem(i+1)' color="warn" matTooltip="add new item"><i class="material-icons">add_circle_outline</i></button>
+            </td>
+
+        </tr>
+    </table>
+
+    <table id="customers" class="table-full-width" cellspacing="2">
+        <tr>
+
+        </tr>
+        <tr>
+
+            <td class="cell-full-width"></td>
+            <td class="cell-full-width">Subtotal</td>
+            <td class="example-full-width">
+                <input class="form-control right_placeholder" disabled value="{{ form.value.subTotal | currency  }}">
+
+            </td>
+        </tr>
+        <tr>
+            <td class="cell-medium-width"></td>
+            <td>Tax</td>
+            <td><input class="form-control right_placeholder" mdInput disabled value="{{ form.value.tax | currency  }}"></td>
+            <td><input style="direction: rtl;" (keyup)="calculate()" mdInput type="number" formControlName="taxPercent" placeholder="% tax"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Total</td>
+            <td><input class="input-form" disabled value="{{ form.value.grantTotal | currency  }}"></td>
+        </tr>
+    </table>
+
+
+</form>
+
+<p><button class="button button3" (click)="save(1)" color="primary">Save</button></p>

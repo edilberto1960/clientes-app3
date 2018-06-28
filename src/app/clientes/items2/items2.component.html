@@ -1,0 +1,59 @@
+<!-- <mat-card class="example-card"> -->
+
+<form class="example-form" [formGroup]="form">
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Company (disabled)" disabled value="Google">
+    </mat-form-field>
+
+
+    <table formArrayName="invoiceItems" cellspacing="2">
+        <tr *ngFor="let item of addItemArr.controls; let i=index;" [formGroupName]="i">
+            <td>
+                <button mat-button color="warn" matTooltip="click for delete"><i class="material-icons">delete_forever</i></button>
+            </td>
+            <td>
+                <mat-form-field class="example-full-width">
+                    <input matInput size="10" formControlName="id" placeholder="id" autofocus="autofocus" [value]="i" type="number" />
+                </mat-form-field>
+            </td>
+            <!-- <td>
+                      <mat-form-field class="example-full-width">
+                          <input matInput size="10" (keyup)="searchProduct(product.value)" #product formControlName="itemProducto" placeholder="Product" autofocus="autofocus" required type="text" />
+                      </mat-form-field>
+                  </td> -->
+            <mat-form-field class="example-full-width">
+                <input type="text" placeholder="Assignee" (focus)="filterOpt()" size="40px" aria-label="Assignee" matInput formControlName="itemProducto" [matAutocomplete]="auto" required>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{ option.nombre }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <td>
+                <mat-form-field class="example-small-width">
+                    <input matInput size="10" (keyup)="calculate()" formControlName="cantidad" placeholder="Ammount" autofocus="autofocus" required type="number" required/>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="example-full-width">
+                    <input matInput size="10" formControlName="precio" placeholder="Unit Price" autofocus="autofocus" required/>
+                </mat-form-field>
+            </td>
+
+            <td>
+                <mat-form-field class="example-full-width">
+                    <input matInput size="10" formControlName="total" placeholder="Total (disabled)">
+                </mat-form-field>
+            </td>
+            <td>
+                <button mat-button (click)='addItem(i+1)' color="warn" matTooltip="add new item"><i class="material-icons">add_circle_outline</i></button>
+            </td>
+
+        </tr>
+    </table>
+
+
+</form>
+
+<p><button mat-raised-button (click)="save(1)" color="primary">Save</button></p>
+<!-- </mat-card> -->
